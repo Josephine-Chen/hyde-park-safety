@@ -24,3 +24,6 @@ java/.idea
 java/*.log
 java/target/
 *.iml
+
+package-lock.json
+/js/package-lock.json

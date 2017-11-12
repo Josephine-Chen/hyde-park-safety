@@ -1,3 +1,25 @@
 #title {
   margin:5px;
 }
+
+/*div.col.input-field #locationInput {
+  position:fixed;
+  left:20px;
+  top:100px;
+}
+
+input#locationInput.white-text{
+  position:fixed;
+  left:20px;
+  top:100px;
+}
+
+.input-field label:not(.label-icon).active #locationInput {
+  transform: translateY(95%);
+}*/
+
+/*input#originInput {
+  position:fixed;
+  left:0px;
+  top:80px;
+}*/

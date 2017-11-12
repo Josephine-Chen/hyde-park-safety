@@ -23,3 +23,24 @@ body {
   border-bottom: 1px solid #dbdbdb;
   box-shadow: 0 1px 0 0 #dbdbdb;
 }
+
+/*.side-nav a {
+ line-height: 15px !important;
+}
+
+.side-nav.fixed a {
+ line-height: 15px !important;
+}*/
+
+.collapsible-header {
+  min-height: 2rem;
+  line-height:2rem;
+  height: 30px;
+}
+
+.collapsible-body {
+  padding:10px;
+  padding-bottom:0px;
+  line-height:0rem;
+  text-decoration-color: #FFF;
+}
