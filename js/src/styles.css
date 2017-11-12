@@ -24,13 +24,13 @@ body {
   box-shadow: 0 1px 0 0 #dbdbdb;
 }
 
-.side-nav a {
+/*.side-nav a {
  line-height: 15px !important;
 }
 
 .side-nav.fixed a {
  line-height: 15px !important;
-}
+}*/
 
 .collapsible-header {
   min-height: 2rem;
