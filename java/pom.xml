@@ -40,6 +40,14 @@
             <artifactId>jsoup</artifactId>
             <version>1.10.2</version>
         </dependency>
+
+        <!-- apache -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.0</version>
+        </dependency>
+
     </dependencies>
 
     <build>
