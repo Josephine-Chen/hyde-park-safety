@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import {Row, Col} from 'react-materialize';
 import Sidebar from './Sidebar.js';
 import Map from './Map.js';
-import Directions from './Directions.js';
 import RightBar from './RightBar.js';
 import './styles/Main.css';
 
