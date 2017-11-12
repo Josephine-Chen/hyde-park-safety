@@ -1,30 +1,26 @@
 package com.hydeparksafety.service;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.URL;
+import com.hydeparksafety.entity.Address;
+import com.hydeparksafety.entity.Incident;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-
-import com.hydeparksafety.entity.Address;
-import com.hydeparksafety.entity.Incident;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
-
-import java.net.*;
-import java.io.*;
+import java.util.List;
 
 
 public class ReadIncidentStringService {
 	private Logger logger = LogManager.getLogger(ReadIncidentStringService.class);
 
-	public void readString(String arg)
+	public List<Incident> readString(String arg)
 	{
 		String lines[] = arg.split("[\\r\\n]+");
-		
-		System.out.println(arg);
+		List<Incident> incidents = new ArrayList<>();
+
 		int i = 0;
 		while (i < lines.length)
 		{
@@ -55,43 +51,40 @@ public class ReadIncidentStringService {
 					int lastIndex = splits[1].indexOf(')');
 					
 					Address address = new Address();
-					address.setLocationName(splits[1].substring(firstIndex, lastIndex));
+					if (lastIndex > 0)
+						address.setLocationName(splits[1].substring(firstIndex, lastIndex));
 					address.setStreet(splits[1].substring(0, firstIndex-1));
 					incident.setAddress(address);
 				}
-				else
+				else if (StringUtils.isNotBlank(inputLine))
 				{
 					Address address = new Address();
-					System.out.println(splits[1]);
 					address.setStreet(splits[1]);
 					incident.setAddress(address);
 				}
-				
 				
 				
 				//reads date/time reported
 				i = i + 1;
 				inputLine = lines[i];
 				splits = inputLine.split("<td>|</td>");
-				
-				Date date = new Date();
+
 				String pattern = "M/d/yy h:mm a";
 				SimpleDateFormat formatter = new SimpleDateFormat(pattern);
 				
 				try{
-					date = formatter.parse(splits[1]);
+					Date date = formatter.parse(splits[1]);
+					incident.setReported(date);
 				}
 				catch (ParseException e) {
 					logger.error("this is the error", e);
 				}
 				
-				incident.setReported(date);
-				
 				//read occurred time
 				i = i + 1;
 				inputLine = lines[i];
 				splits = inputLine.split("<td>|</td>");
-				//incident.setOccurred(splits[1]);
+				incident.setOccurred(splits[1]);
 				
 				//read the comments
 				i = i + 1;
@@ -114,8 +107,7 @@ public class ReadIncidentStringService {
 				incident.setUcpdiNumber(splits[1]);
 				
 				i = i + 1;
-				
-				System.out.println(incident);
+				incidents.add(incident);
 				}
 			else
 			{
@@ -124,7 +116,7 @@ public class ReadIncidentStringService {
 
 			
 		}//end of while
-		
+		return incidents;
 	}
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
