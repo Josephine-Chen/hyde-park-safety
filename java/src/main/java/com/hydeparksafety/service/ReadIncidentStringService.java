@@ -46,7 +46,8 @@ public class ReadIncidentStringService {
 				incident.setIncident(crime);
 				
 				//reads address
-				inputLine = lines[i+1];	
+				i = i + 1;
+				inputLine = lines[i];	
 				splits = inputLine.split("<td>|</td>");
 				if (inputLine.contains("("))
 				{
@@ -61,6 +62,7 @@ public class ReadIncidentStringService {
 				else
 				{
 					Address address = new Address();
+					System.out.println(splits[1]);
 					address.setStreet(splits[1]);
 					incident.setAddress(address);
 				}
@@ -68,7 +70,8 @@ public class ReadIncidentStringService {
 				
 				
 				//reads date/time reported
-				inputLine = lines[i+1];
+				i = i + 1;
+				inputLine = lines[i];
 				splits = inputLine.split("<td>|</td>");
 				
 				Date date = new Date();
@@ -85,24 +88,28 @@ public class ReadIncidentStringService {
 				incident.setReported(date);
 				
 				//read occurred time
-				inputLine = lines[i+1];
+				i = i + 1;
+				inputLine = lines[i];
 				splits = inputLine.split("<td>|</td>");
 				//incident.setOccurred(splits[1]);
 				
 				//read the comments
-				inputLine = lines[i+1];
+				i = i + 1;
+				inputLine = lines[i];
 				splits = inputLine.split("<td>|</td>");
 				incident.setComment(splits[1]);
 				
 				//reads whether it's open or closed
-				inputLine = lines[i+1];
+				i = i + 1;
+				inputLine = lines[i];
 				if (inputLine.toLowerCase().contains("closed"))
 					incident.setClosed(true);
 				else
 					incident.setClosed(false);
 				
 				//reads in the weird number at the end
-				inputLine = lines[i+1];
+				i = i + 1;
+				inputLine = lines[i];
 				splits = inputLine.split("<td>|</td>");
 				incident.setUcpdiNumber(splits[1]);
 				
