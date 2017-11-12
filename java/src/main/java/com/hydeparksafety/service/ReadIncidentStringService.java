@@ -118,9 +118,4 @@ public class ReadIncidentStringService {
 		}//end of while
 		return incidents;
 	}
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
-	}
-
 }

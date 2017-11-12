@@ -13,6 +13,7 @@ import java.text.SimpleDateFormat;
 /**
  * Created by HSong on 11/11/2017.
  */
+//@EnableOAuth2Sso
 @SpringBootApplication
 public class Application implements CommandLineRunner {
     @Autowired private UChicagoPoliceFeedService ucpFeedService;

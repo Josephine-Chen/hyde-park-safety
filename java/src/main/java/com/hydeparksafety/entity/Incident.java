@@ -22,56 +22,63 @@ public class Incident {
         return incident;
     }
 
-    public void setIncident(String[] incident) {
+    public Incident setIncident(String[] incident) {
         this.incident = incident;
+        return this;
     }
 
     public Address getAddress() {
         return address;
     }
 
-    public void setAddress(Address address) {
+    public Incident setAddress(Address address) {
         this.address = address;
+        return this;
     }
 
     public Date getReported() {
         return reported;
     }
 
-    public void setReported(Date reported) {
+    public Incident setReported(Date reported) {
         this.reported = reported;
+        return this;
     }
 
     public String getOccurred() {
         return occurred;
     }
 
-    public void setOccurred(String occurred) {
+    public Incident setOccurred(String occurred) {
         this.occurred = occurred;
+        return this;
     }
 
     public String getComment() {
         return comment;
     }
 
-    public void setComment(String comment) {
+    public Incident setComment(String comment) {
         this.comment = comment;
+        return this;
     }
 
     public boolean isClosed() {
         return isClosed;
     }
 
-    public void setClosed(boolean closed) {
+    public Incident setClosed(boolean closed) {
         isClosed = closed;
+        return this;
     }
 
     public String getUcpdiNumber() {
         return ucpdiNumber;
     }
 
-    public void setUcpdiNumber(String ucpdiNumber) {
+    public Incident setUcpdiNumber(String ucpdiNumber) {
         this.ucpdiNumber = ucpdiNumber;
+        return this;
     }
 
     @Override
