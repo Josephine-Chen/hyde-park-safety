@@ -10,7 +10,7 @@ import java.util.List;
  */
 public interface IncidentRepo extends MongoRepository<Incident, String> {
     List<Incident> findAll();
-//    List<Incident>
-
+//    List<Incident> findByOccurredBetween(Date start, Date end);
+    List<Incident> findFirst5ByOrderByOccurredDesc();
     Incident save(Incident incident);
 }

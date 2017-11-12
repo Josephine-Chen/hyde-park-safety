@@ -1,5 +1,7 @@
 package com.hydeparksafety.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Arrays;
 import java.util.Date;
 
@@ -9,8 +11,9 @@ import java.util.Date;
 public class Incident {
     String[] incident;
     Address address;
+    @JsonFormat(pattern="MM/dd/yy hh:mm a")
     Date reported;
-    Date occurred;
+    String occurred;
     String comment;
     boolean isClosed;
     String ucpdiNumber;
@@ -39,11 +42,11 @@ public class Incident {
         this.reported = reported;
     }
 
-    public Date getOccurred() {
+    public String getOccurred() {
         return occurred;
     }
 
-    public void setOccurred(Date occurred) {
+    public void setOccurred(String occurred) {
         this.occurred = occurred;
     }
 
