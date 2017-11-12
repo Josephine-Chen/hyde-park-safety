@@ -93,6 +93,8 @@ public class ReadIncidentStringService {
 				splits = inputLine.split("<td>|</td>");
 				incident.setUcpdiNumber(splits[1]);
 				
+				i = i + 1;
+				
 				System.out.println(incident);
 				}
 			else
