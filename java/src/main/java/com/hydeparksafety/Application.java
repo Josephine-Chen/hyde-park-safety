@@ -7,6 +7,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * Created by HSong on 11/11/2017.
  */
@@ -18,8 +21,13 @@ public class Application implements CommandLineRunner {
 
     }
 
+    String pattern = "yyyy-MM-dd";
+    SimpleDateFormat formatter = new SimpleDateFormat(pattern);
+
     @Override
     public void run(String... args) throws Exception {
-        ucpFeedService.getFeeds();
+        Date start = formatter.parse("2016-10-18");
+        Date end = formatter.parse("2017-11-09");
+        ucpFeedService.getFeeds(start, end);
     }
 }
