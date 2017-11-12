@@ -1,5 +1,6 @@
 package com.hydeparksafety.service.impl;
 
+import com.hydeparksafety.service.ReadIncidentStringService;
 import com.hydeparksafety.service.UChicagoPoliceFeedService;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -36,6 +37,8 @@ public class UChicagoPoliceFeedServiceImpl implements UChicagoPoliceFeedService 
             int offset = 0;
             while (offset < 1) {
                 String url = getUrl(start, end, offset);
+
+                ReadIncidentStringService service = new ReadIncidentStringService();
 
                 URL oracle = new URL(url);
                 BufferedReader in = new BufferedReader(
@@ -75,7 +78,7 @@ public class UChicagoPoliceFeedServiceImpl implements UChicagoPoliceFeedService 
 
                 Document doc = Jsoup.parse(html.toString());
                 Elements tbody = doc.getElementsByTag("tbody");
-
+                service.readString(tbody.toString());
                 offset += 5;
             }
         } catch (IOException e) {
