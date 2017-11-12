@@ -10,22 +10,23 @@ import java.util.Date;
 
 import com.hydeparksafety.entity.Address;
 import com.hydeparksafety.entity.Incident;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 import java.net.*;
 import java.io.*;
 
 
 public class ReadIncidentStringService {
+	private Logger logger = LogManager.getLogger(ReadIncidentStringService.class);
 
 	public void readString(String arg)
-	{	
-		String inputLine;
-		URL url = new URL("https://incidentreports.uchicago.edu//incidentReportArchive.php?reportDate=1510120800");
-		BufferedReader in = new BufferedReader(
-        new InputStreamReader(url.openStream()));
-		
-		while ((inputLine = in.readLine()) != null)
+	{
+		String lines[] = arg.split("[\\r\\n]+");
+
+		for (int i=0; i<lines.length; i++)
 		{
+			String inputLine = lines[i];
 			if (inputLine.contains("<td>"))
 			{
 				//reads crime name
@@ -34,18 +35,14 @@ public class ReadIncidentStringService {
 				
 				if (splits[1].toLowerCase().contains("void")) //weird case where they just have void in everything
 				{
-					for (int i = 0; i < 12; i++)
-					{
-						inputLine = in.readLine(); //to get to next part (6 blank lines, 6 lines of data
-					}
+					i += 6; //to get to next part (6 blank lines, 6 lines of data
+					continue;
 				}
-				else 
-				{
+
 				String[] crime = splits[1].split("/");
 				incident.setIncident(crime);
 				
 				//reads address
-				inputLine = in.readLine();
 				inputLine = in.readLine();
 				splits = inputLine.split("<td>|</td>");
 				int firstIndex = splits[1].indexOf('(');
@@ -58,7 +55,6 @@ public class ReadIncidentStringService {
 				
 				//reads date/time reported
 				inputLine = in.readLine();
-				inputLine = in.readLine();
 				splits = inputLine.split("<td>|</td>");
 				
 				Date date = new Date();
@@ -69,25 +65,22 @@ public class ReadIncidentStringService {
 					date = formatter.parse(splits[1]);
 				}
 				catch (ParseException e) {
-					
+					logger.error("this is the error", e);
 				}
 				
 				incident.setReported(date);
 				
 				//read occurred time
 				inputLine = in.readLine();
-				inputLine = in.readLine();
 				splits = inputLine.split("<td>|</td>");
 				incident.setOccurred(splits[1]);
 				
-				//read the comments 
-				inputLine = in.readLine();
+				//read the comments
 				inputLine = in.readLine();
 				splits = inputLine.split("<td>|</td>");
 				incident.setComment(splits[1]);
 				
 				//reads whether it's open or closed
-				inputLine = in.readLine();
 				inputLine = in.readLine();
 				if (inputLine.toLowerCase().contains("closed"))
 					incident.setClosed(true);
@@ -96,16 +89,14 @@ public class ReadIncidentStringService {
 				
 				//reads in the weird number at the end
 				inputLine = in.readLine();
-				inputLine = in.readLine();
 				splits = inputLine.split("<td>|</td>");
 				incident.setUcpdiNumber(splits[1]);
 				
 				System.out.println(incident);
 				}
-			} //end of first if
+
 			
 		}//end of while
-		in.close();
 		
 	}
 	public static void main(String[] args) {
