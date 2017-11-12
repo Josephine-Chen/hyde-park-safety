@@ -24,6 +24,7 @@ public class ReadIncidentStringService {
 	{
 		String lines[] = arg.split("[\\r\\n]+");
 		
+		System.out.println(arg);
 		int i = 0;
 		while (i < lines.length)
 		{
@@ -39,20 +40,32 @@ public class ReadIncidentStringService {
 					i += 7; //to get to next part (6 blank lines, 6 lines of data
 					continue;
 				}
-
+				
+				splits = inputLine.split("<td>|</td>");
 				String[] crime = splits[1].split("/");
 				incident.setIncident(crime);
 				
 				//reads address
 				inputLine = lines[i+1];	
 				splits = inputLine.split("<td>|</td>");
-				int firstIndex = splits[1].indexOf('(');
-				int lastIndex = splits[1].indexOf(')');
+				if (inputLine.contains("("))
+				{
+					int firstIndex = splits[1].indexOf('(');
+					int lastIndex = splits[1].indexOf(')');
+					
+					Address address = new Address();
+					address.setLocationName(splits[1].substring(firstIndex, lastIndex));
+					address.setStreet(splits[1].substring(0, firstIndex-1));
+					incident.setAddress(address);
+				}
+				else
+				{
+					Address address = new Address();
+					address.setStreet(splits[1]);
+					incident.setAddress(address);
+				}
 				
-				Address address = new Address();
-				address.setLocationName(splits[1].substring(firstIndex, lastIndex));
-				address.setStreet(splits[1].substring(0, firstIndex-1));
-				incident.setAddress(address);
+				
 				
 				//reads date/time reported
 				inputLine = lines[i+1];
@@ -74,7 +87,7 @@ public class ReadIncidentStringService {
 				//read occurred time
 				inputLine = lines[i+1];
 				splits = inputLine.split("<td>|</td>");
-				incident.setOccurred(splits[1]);
+				//incident.setOccurred(splits[1]);
 				
 				//read the comments
 				inputLine = lines[i+1];
