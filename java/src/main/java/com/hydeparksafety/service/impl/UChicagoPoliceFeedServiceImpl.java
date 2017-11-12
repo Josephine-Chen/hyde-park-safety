@@ -1,5 +1,6 @@
 package com.hydeparksafety.service.impl;
 
+import com.hydeparksafety.entity.Incident;
 import com.hydeparksafety.service.ReadIncidentStringService;
 import com.hydeparksafety.service.UChicagoPoliceFeedService;
 import org.jsoup.Jsoup;
@@ -12,6 +13,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -31,11 +33,11 @@ public class UChicagoPoliceFeedServiceImpl implements UChicagoPoliceFeedService 
     private SimpleDateFormat formatter = new SimpleDateFormat(PATTERN);
 
     @Override
-    public List getFeeds(Date start, Date end) {
-        List result = null;
+    public List<Incident> getFeeds(Date start, Date end) {
+        List<Incident> result = new ArrayList(1700);
         try {
             int offset = 0;
-            while (offset < 1) {
+            while (offset < 1700) {
                 String url = getUrl(start, end, offset);
 
                 ReadIncidentStringService service = new ReadIncidentStringService();
@@ -78,8 +80,9 @@ public class UChicagoPoliceFeedServiceImpl implements UChicagoPoliceFeedService 
 
                 Document doc = Jsoup.parse(html.toString());
                 Elements tbody = doc.getElementsByTag("tbody");
-                service.readString(tbody.toString());
+                List<Incident> incidents = service.readString(tbody.toString());
                 offset += 5;
+                result.addAll(incidents);
             }
         } catch (IOException e) {
             throw new RuntimeException(e);

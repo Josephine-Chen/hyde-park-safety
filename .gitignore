@@ -21,5 +21,6 @@ yarn-debug.log*
 yarn-error.log*
 
 java/.idea
+java/*.log
 java/target/
 *.iml
